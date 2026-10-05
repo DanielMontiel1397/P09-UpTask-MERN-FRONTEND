@@ -16,8 +16,8 @@ export default function NavMenu({user} : NavMenuProps) {
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN_UPTASK');
-    queryClient.invalidateQueries({queryKey: ['getUser']});
-    navigate('/auth/login')
+    queryClient.removeQueries({queryKey: ['getUser']});
+    navigate('/auth/login', { replace: true })
   }
 
   return (

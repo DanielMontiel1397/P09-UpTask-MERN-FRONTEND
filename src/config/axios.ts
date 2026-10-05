@@ -8,7 +8,7 @@ const clienteAxios = axios.create({
 clienteAxios.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('AUTH_TOKEN_UPTASK');
-
+        
         if(token){
             config.headers.Authorization = `Bearer ${token}`;
         }

@@ -3,32 +3,19 @@ import Logo from "../components/Logo";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
-import { useEffect, useState } from "react";
 
 
 export default function AuthLayout() {
 
-    const { data, isLoading } = useAuth();
+    const { data, isError, isLoading } = useAuth();
 
-    const [showSpinner, setShowSpinner] = useState(true);
-
-    useEffect(() => {
-        if (!isLoading) {
-            const timer = setTimeout(() => {
-                setShowSpinner(false);
-            }, 800);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isLoading]);
-
-    if (isLoading || showSpinner) {
+    if (isLoading) {
         return <Spinner />;
     }
 
 
-    if (data) {
-        return <Navigate to={'/'} />
+    if (data && !isError && localStorage.getItem('AUTH_TOKEN_UPTASK')) {
+        return <Navigate to={'/'} replace />
     }
 
 

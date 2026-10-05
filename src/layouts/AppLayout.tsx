@@ -13,22 +13,26 @@ export default function AppLayout() {
 
   const [showSpinner, setShowSpinner] = useState(true);
   
-      useEffect(() => {
-          if (!isLoading) {
-              const timer = setTimeout(() => {
-                  setShowSpinner(false);
-              }, 800);
-  
-              return () => clearTimeout(timer);
-          }
-      }, [isLoading]);
-  
-      if (isLoading || showSpinner) {
-          return <Spinner />;
-      }
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => {
+        setShowSpinner(false);
+      }, 800);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
+  if (!localStorage.getItem('AUTH_TOKEN_UPTASK')) {
+    return <Navigate to={'/auth/login'} replace />
+  }
+
+  if (isLoading || showSpinner) {
+    return <Spinner />;
+  }
 
   if(isError){
-    return <Navigate to={'/auth/login'}/>
+    return <Navigate to={'/auth/login'} replace />
   }
 
 
